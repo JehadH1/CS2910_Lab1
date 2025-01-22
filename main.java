@@ -523,11 +523,35 @@ public class main {
                     System.out.print("Which students are you looking for? (enter last name) ");
                     lastName = input.next();
                     System.out.println();
-                    System.out.println("Which semester is this for?");
+                    System.out.print("Which semester is this for? ");
                     semester = input.next();
-                    for(Student student:students){
-                        if(student.lastName.equals(lastName)){
-                            
+                    ArrayList<Integer> SemNum = new ArrayList<>();
+                    for (Course course : courses) {
+                        if (course.semester.equals(semester)) {
+                            SemNum.add(Integer.parseInt(course.code) - 1);
+                        }
+                    }
+                    for (Student student : students) {
+                        int ave = 0;
+                        int numberOfClasses = 0;
+
+                        if (student.lastName.equals(lastName)) {
+                            System.out.print(student.lastName + " " + student.firstName);
+                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+                            for (Integer num : SemNum) {
+                                if (student.getGrades().get(num) != -1) {
+                                    ave += outputGrades.get(num);
+                                    numberOfClasses++;
+                                }
+                            }
+                        }
+                        if (numberOfClasses != 0) {
+                            ave = ave / numberOfClasses;
+                            System.out.println(" Overall Average = " + ave);
+                            System.out.println();
+                        } else {
+                            System.out.println();
+                            System.out.println("You have no classes in this sem to find an average for");
                         }
                     }
                     break;
