@@ -3,7 +3,7 @@ import java.io.*;
 
 public class main {
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "unchecked", "unlikely-arg-type" })
     public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in);
         Scanner inputFStudent = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/students.csv"));
@@ -111,6 +111,16 @@ public class main {
             // Q11
             System.out.println("11) search for student info by phone number");
 
+            // Q12
+            System.out.println(
+                    "12) output list of all courses taken by student (user enters student last name) and grades");
+            // Q13
+            System.out.println(
+                    "13) output list of all courses taken by student (user enters student last name) and grades");
+
+            // Q14
+            System.out.println("14) calculate average grade for a specific student (user enters student\n" + //
+                    "last name)");
             System.out.println("0) Exit");
 
             System.out.println();
@@ -443,6 +453,65 @@ public class main {
                     }
                     System.out.println();
                     break;
+                case 12:
+                case 13:
+                    System.out.print("Which students are you looking for? (enter last name) ");
+                    lastName = input.next();
+                    System.out.println();
+                    for (Student student : students) {
+                        int classTracker = student.getGrades().size();
+                        if (student.lastName.equals(lastName)) {
+                            System.out.println(student);
+                            System.out.println();
+                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+                            for (int i = 0; i < outputGrades.size(); i++) {
+                                if (!(outputGrades.get(i).equals(-1))) {
+                                    System.out.print(courses.get(i).stringClass());
+                                    System.out.println("Grade: " + outputGrades.get(i));
+                                } else {
+                                    classTracker--;
+                                }
+                            }
+                            if (classTracker == 0) {
+                                System.out.println("You have no classes");
+                            }
+                            System.out.println();
+                        }
+                    }
+                    System.out.println();
+                    break;
+                case 14:
+                    System.out.print("Which students are you looking for? (enter last name) ");
+                    lastName = input.next();
+                    System.out.println();
+                    for (Student student : students) {
+                        int ave = 0;
+                        int numberOfClasses = 0;
+                        if (student.lastName.equals(lastName)) {
+
+                            System.out.print(student.lastName + " " + student.firstName);
+                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+                            if (!(student.getGrades().equals(-1))) {
+                                for (int i = 0; i < outputGrades.size(); i++) {
+                                    if (!(outputGrades.get(i).equals(-1))) {
+                                        ave += outputGrades.get(i);
+                                        numberOfClasses++;
+                                    }
+                                }
+                            }
+
+                            if (numberOfClasses != 0) {
+                                ave = ave / numberOfClasses;
+                                System.out.println(" Overall Average = " + ave);
+                                System.out.println();
+                            } else {
+                                System.out.println();
+                                System.out.println("You have no classes to find an average for");
+                            }
+                        }
+                    }
+                    System.out.println();
+                    break;
                 case 0:
                     state = false;
                     break;
@@ -513,6 +582,11 @@ class Course {
         this.courseName = courseName;
         this.code = code;
         this.semester = semester;
+    }
+
+    public String stringClass() {
+        return String.format("Course Name: %-10s | | Semester: %-15s",
+                courseName, semester);
     }
 
     @Override
