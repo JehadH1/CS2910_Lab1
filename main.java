@@ -119,8 +119,15 @@ public class main {
                     "13) output list of all courses taken by student (user enters student last name) and grades");
 
             // Q14
-            System.out.println("14) calculate average grade for a specific student (user enters student\n" + //
-                    "last name)");
+            System.out.println("14) calculate average grade for a specific student (user enters student last name)");
+
+            // Q15
+            System.out.println(
+                    "15) calculate the average grade for a specific student for a specific term (user enters student's last name and term)");
+
+            // Q16
+            System.out.println(
+                    "16) calculate average grade for specific courses (user enters course name)");
             System.out.println("0) Exit");
 
             System.out.println();
@@ -511,6 +518,20 @@ public class main {
                         }
                     }
                     System.out.println();
+                    break;
+                case 15:
+                    System.out.print("Which students are you looking for? (enter last name) ");
+                    lastName = input.next();
+                    System.out.println();
+                    System.out.println("Which semester is this for?");
+                    semester = input.next();
+                    for(Student student:students){
+                        if(student.lastName.equals(lastName)){
+                            
+                        }
+                    }
+                    break;
+                case 16:
                     break;
                 case 0:
                     state = false;
