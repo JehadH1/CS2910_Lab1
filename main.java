@@ -38,7 +38,7 @@ public class main {
                 String id = parts[0];
                 ArrayList<Integer> grades = new ArrayList<>();
                 for (int i = 3; i < parts.length; i++) {
-                    if (parts[i].equals("na")) {
+                    if (parts[i].equals("na") || parts[i].equals("-1")) {
                         grades.add(-1);
                     } else {
                         grades.add(Integer.parseInt(parts[i].trim()));
@@ -55,6 +55,7 @@ public class main {
             }
         }
         int codeTracker = 0;
+
         while (inputFCourses.hasNextLine()) {
             String line = inputFCourses.nextLine();
             String[] parts = line.split(";");
@@ -260,6 +261,8 @@ public class main {
                             System.out.print("Enter email: ");
                             email = input.next();
                             students.add(new Student(id, lastName, firstName, phoneNum, email));
+                            saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+
                             for (int i = 0; i < codeTracker; i++) {
                                 students.getLast().addGrade(-1);
                             }
@@ -301,6 +304,9 @@ public class main {
                             for (Student student : students) {
                                 student.addGrade(-1);
                             }
+                            saveCoursesToFile(courses, "/home/jehad/Desktop/CS2910/Lab1/courses.csv");
+                            saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+                            saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                             System.out.println();
                             break;
                         case 3:
@@ -328,6 +334,7 @@ public class main {
                                         System.out.println();
 
                                         student.changeGrades(index, newGrade);
+                                        saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                         System.out.println();
                                         IdFound = true;
                                         break;
@@ -385,6 +392,8 @@ public class main {
                                     System.out.println("You have messed up start from the start please");
                                     System.out.println();
                                 }
+                                saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+
                                 System.out.println();
                                 found = true;
                                 break;
@@ -596,6 +605,42 @@ public class main {
 
         }
 
+    }
+
+    public static void saveStudentsToFile(List<Student> students, String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            for (Student student : students) {
+                writer.println(student.id + ";" + student.lastName + ";" + student.firstName + ";" +
+                        student.phoneNum + ";" + student.email);
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + filePath);
+        }
+    }
+
+    // Method to save courses to file
+    private static void saveCoursesToFile(List<Course> courses, String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            for (Course course : courses) {
+                writer.println(course.courseName + ";" + course.semester + ";" + course.code);
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + filePath);
+        }
+    }
+
+    private static void saveGradesToFile(List<Student> students, String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            for (Student student : students) {
+                writer.print(student.id + ";" + student.lastName + ";" + student.firstName);
+                for (int i = 0; i < student.getGrades().size(); i++) {
+                    writer.print(";" + "" + (student.getGrades().get(i)));
+                }
+                writer.println();
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + filePath);
+        }
     }
 }
 
