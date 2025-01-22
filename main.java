@@ -556,6 +556,34 @@ public class main {
                     }
                     break;
                 case 16:
+                    System.out.print("What course are you trying to calculate the average for? ");
+                    String lookUpCourse = input.next();
+                    ArrayList<Integer> courseCode = new ArrayList<>();
+                    for (Course course : courses) {
+                        if (course.courseName.equals(lookUpCourse)) {
+                            courseCode.add(Integer.parseInt(course.code) - 1);
+                        }
+                    }
+                    int total = 0;
+                    int numberOfClasses = 0;
+                    for (Student student : students) {
+                        for (Integer index : courseCode) {
+                            if (student.getGrades().get(index) != -1) {
+                                total = total + student.getGrades().get(index);
+                                numberOfClasses++;
+                            }
+                        }
+                    }
+                    if (numberOfClasses != 0) {
+                        total = total / numberOfClasses;
+                        System.out.println();
+                        System.out.println("Overall Average grade for " + lookUpCourse + " = " + total);
+                        System.out.println();
+                    } else {
+                        System.out.println();
+                        System.out.println("No Average For this class");
+                    }
+                    System.out.println();
                     break;
                 case 0:
                     state = false;
