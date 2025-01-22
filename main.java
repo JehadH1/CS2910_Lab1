@@ -9,6 +9,7 @@ public class main {
         Scanner inputFStudent = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/students.csv"));
         Scanner inputFCourses = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/courses.csv"));
         Scanner inputFGrades = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/grades.csv"));
+        
 
         // List to store student data
         ArrayList<Student> students = new ArrayList<>();
