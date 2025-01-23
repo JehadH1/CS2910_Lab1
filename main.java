@@ -412,6 +412,7 @@ public class main {
                                         }
                                     }
                                 }
+                                
                                 System.out.print("Enter first name: ");
                                 firstName = input.next();
                                 System.out.print("Enter last name: ");
