@@ -625,7 +625,7 @@ public class main {
                             }
                         }
                         if (correct == false) {
-                            System.out.println("You have messed up with the last name try again");
+                            System.out.println("You have messed  try again");
                         }
                     }
 
@@ -633,12 +633,19 @@ public class main {
                     break;
 
                 case 11:
-                    System.out.print("Which students are you looking for? (enter phone number) ");
-                    String phoneNum = input.next();
-                    System.out.println();
-                    for (Student student : students) {
-                        if (student.phoneNum.equals(phoneNum)) {
-                            System.out.println(student.fullString());
+                    correct = false;
+                    while (!correct) {
+                        System.out.print("Which students are you looking for? (enter phone number) ");
+                        String phoneNum = input.next();
+                        System.out.println();
+                        for (Student student : students) {
+                            if (student.phoneNum.equals(phoneNum)) {
+                                System.out.println(student.fullString());
+                                correct = true;
+                            }
+                        }
+                        if (correct == false) {
+                            System.out.println("You have messed  try again");
                         }
                     }
                     System.out.println();
