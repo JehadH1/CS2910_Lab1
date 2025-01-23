@@ -83,6 +83,8 @@ public class main {
 
         int choice; // used for all input needed for number
         String semester; // used for all inputs need for semester
+        boolean correct = false;
+        int access = 0;
 
         while (state) {
             System.out.println("What are you looking for ?");
@@ -183,52 +185,78 @@ public class main {
                     });
 
                     // ask and get user input
-                    System.out.println("What semester do you wanna look for?\n");
+                    System.out.println("What semester do you want to look for?\n");
                     System.out.println("1) Fall \n2) Winter \n3) Spring \n4) Summer\n");
-                    System.out.print("Enter input here: ");
-                    System.out.println();
 
-                    switch (choice) {
-                        case 1:
-                            System.out.println("Courses for Fall\n");
-                            for (Course course : courses) {
-                                if (course.semester.equals("fall")) {
-                                    System.out.println(course);
-                                }
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Courses for Winter\n");
+                    correct = false; // Ensure we stay in the loop until a valid choice is made
+                    access = 0;
 
-                            for (Course course : courses) {
-                                if (course.semester.equals("winter")) {
-                                    System.out.println(course);
+                    while (!correct) {
+                        System.out.print("Enter input here: ");
+                        choice = input.nextInt(); // Read user input
+                        System.out.println();
+                        switch (choice) {
+                            case 1:
+                                System.out.println("Courses for Fall\n");
+                                for (Course course : courses) {
+                                    if (course.semester.equalsIgnoreCase("fall")) {
+                                        System.out.println(course);
+                                        access++;
+                                    }
                                 }
-                            }
-                            break;
-                        case 3:
-                            System.out.println("Courses for spring\n");
-                            for (Course course : courses) {
-                                if (course.semester.equals("spring")) {
-                                    System.out.println(course);
+                                if (access == 0) {
+                                    System.out.println("No classes for the semester Fall.");
                                 }
-                            }
-                            break;
-                        case 4:
-                            System.out.println("Courses for Fall\n");
-                            for (Course course : courses) {
-                                if (course.semester.equals("summer")) {
-                                    System.out.println(course);
+                                correct = true; // Exit the loop after processing valid input
+                                break;
+                            case 2:
+                                System.out.println("Courses for Winter\n");
+                                for (Course course : courses) {
+                                    if (course.semester.equalsIgnoreCase("winter")) {
+                                        System.out.println(course);
+                                        access++;
+                                    }
                                 }
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
+                                if (access == 0) {
+                                    System.out.println("No classes for the semester Winter.");
+                                }
+                                correct = true;
+                                break;
+                            case 3:
+                                System.out.println("Courses for Spring\n");
+                                for (Course course : courses) {
+                                    if (course.semester.equalsIgnoreCase("spring")) {
+                                        System.out.println(course);
+                                        access++;
+                                    }
+                                }
+                                if (access == 0) {
+                                    System.out.println("No classes for the semester Spring.");
+                                }
+                                correct = true;
+                                break;
+                            case 4:
+                                System.out.println("Courses for Summer\n");
+                                for (Course course : courses) {
+                                    if (course.semester.equalsIgnoreCase("summer")) {
+                                        System.out.println(course);
+                                        access++;
+                                    }
+                                }
+                                if (access == 0) {
+                                    System.out.println("No classes for the semester Summer.");
+                                }
+                                correct = true;
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                                break; // Re-prompt for input within the same loop iteration
+                        }
+                        access = 0; // Reset access for the next iteration or semester
 
                     }
                     System.out.println();
                     break;
-
                 case 5:
                     courses.sort((a, b) -> {
                         return (a.courseName).compareTo(b.courseName);
