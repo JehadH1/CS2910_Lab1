@@ -512,6 +512,7 @@ public class main {
                     }
                     break;
                 case 7:
+                
                     boolean idState = false;
                     while (!idState) {
                         System.out.print("Which student do you want to look for? enter Id: ");
