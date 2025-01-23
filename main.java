@@ -13,7 +13,7 @@ public class main {
         // List to store student and course data
         ArrayList<Student> students = new ArrayList<>();
         ArrayList<Course> courses = new ArrayList<>();
-        
+
         while (inputFStudent.hasNextLine()) {
             String line = inputFStudent.nextLine(); // Read a line
             String[] parts = line.split(";"); // Split line by semicolon
@@ -389,7 +389,6 @@ public class main {
                     System.out.println();
 
                     correct = false; // Ensure we stay in the loop until a valid choice is made
-
                     while (!correct) {
 
                         System.out.print("Please enter the number you want to access: ");
@@ -436,11 +435,24 @@ public class main {
                                 semester = "Na";
                                 String courseName = "NA", code = "NA";
                                 boolean isValidCourse = false;
+                                boolean SemCorrect = false;
                                 while (!isValidCourse) {
-                                    System.out.print("Enter a Course Name (capitalize the first two letters): ");
+                                    System.out.print(
+                                            "Enter a Course Name (capitalize the first two letters and have 4 numbers): ");
                                     courseName = input.next();
-                                    System.out.print("Enter Semester it's in: ");
-                                    semester = input.next().toLowerCase();
+                                    while (!SemCorrect) {
+                                        System.out.print("Enter Semester it's in: ");
+                                        semester = input.next().toLowerCase();
+                                        if (semester.equals("fall") || semester.equals("winter")
+                                                || semester.equals("spring")
+                                                || semester.equals("summer")) {
+                                            SemCorrect = true;
+                                        } else {
+                                            System.out
+                                                    .println("Your option is not an option to be a semester try again");
+                                            System.out.println();
+                                        }
+                                    }
                                     isValidCourse = true;
                                     for (Course course : courses) {
                                         if (course.courseName.equals(courseName) && course.semester.equals(semester)) {
