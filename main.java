@@ -470,6 +470,7 @@ public class main {
                                 boolean IdFound = false;
                                 System.out
                                         .println("Enter Student ID for the student you want to change the grade for: ");
+                                System.out.println("You should know this before hand");
                                 while (!IdFound) {
                                     System.out.print("Enter Student ID here: ");
                                     String studentId = input.next();
@@ -511,8 +512,8 @@ public class main {
                     }
                     break;
                 case 7:
-                    boolean found = false;
-                    while (!found) {
+                    boolean idState = false;
+                    while (!idState) {
                         System.out.print("Which student do you want to look for? enter Id: ");
                         String studentId = input.next();
                         for (Student student : students) {
@@ -552,17 +553,18 @@ public class main {
                                     System.out.println();
                                 }
                                 saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
-
+                                saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                 System.out.println();
-                                found = true;
+                                idState = true;
                                 break;
                             }
                         }
-                        if (!found) {
+                        if (!idState) {
                             System.out.println("ID not found. Please try again.");
                             System.out.println();
                             break;
                         }
+
                     }
                     break;
                 case 8:
@@ -580,7 +582,6 @@ public class main {
                         if (!courseFound) {
                             System.out.println("Course not found by name. Please try again.");
                             System.out.println();
-                            break;
                         }
                         System.out.println();
                     }
