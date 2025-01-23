@@ -475,6 +475,8 @@ public class main {
                             // Update grade
                             case 3:
                                 boolean IdFound = false;
+                                boolean codeFound = false;
+                                boolean gradeCorrect = false;
                                 System.out
                                         .println("Enter Student ID for the student you want to change the grade for: ");
                                 System.out.println("You should know this before hand");
@@ -490,14 +492,44 @@ public class main {
                                             for (Course course : courses) {
                                                 System.out.println(course);
                                             }
+                                            int index = 0;
                                             System.out.println();
-                                            System.out.print("Enter code here: ");
-                                            int index = input.nextInt() - 1;
-                                            System.out.println();
-                                            System.out.print("What is the changed grade? (0-100) ");
-                                            int newGrade = input.nextInt();
-                                            System.out.println();
-                                            student.changeGrades(index, newGrade);
+                                            while (!codeFound) {
+                                                System.out.print("Enter code here: ");
+                                                index = input.nextInt();
+                                                System.out.println();
+                                                for (Course course : courses) {
+                                                    if ((course.code.equals("" + index))) {
+                                                        codeFound = true;
+                                                    }
+                                                }
+                                                if (codeFound == false) {
+                                                    System.out.println("Try again please");
+                                                    System.out.println();
+                                                }
+                                            }
+                                            int newGrade = -1;
+                                            while (!gradeCorrect) {
+                                                System.out.println(
+                                                        "What is the changed grade? (0-100) (-1 means there are not in the class)");
+                                                System.out.print("Enter here: ");
+                                                newGrade = input.nextInt();
+                                                System.out.println();
+                                                if (newGrade >= 101) {
+                                                    gradeCorrect = false;
+                                                } else if (newGrade <= -1) {
+                                                    newGrade = -1;
+                                                    gradeCorrect = true;
+                                                } else {
+                                                    gradeCorrect = true;
+                                                }
+                                                if (gradeCorrect == false) {
+                                                    System.out.println("Try again please");
+                                                    System.out.println();
+                                                }
+
+                                            }
+                                            student.changeGrades(index - 1, newGrade);
                                             saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                             System.out.println();
                                             IdFound = true;
@@ -521,6 +553,7 @@ public class main {
                 case 7:
 
                     boolean idState = false;
+                    correct = false;
                     while (!idState) {
                         System.out.print("Which student do you want to look for? enter Id: ");
                         String studentId = input.next();
@@ -531,34 +564,56 @@ public class main {
 
                                 System.out.println("What do you want to change?");
                                 System.out.print(
-                                        "ID, Last_Name, First_Name, Phone_Number or Email (enter the first word as seen) ");
-                                String changeOption = input.next();
-                                System.out.println();
+                                        "1)ID\n2)Last Name\n3)First Name\n4)Phone Number\n5)Email\n");
+
                                 String Changed;
-                                if (changeOption.equals("ID")) {
-                                    System.out.print("Enter new change for ID: ");
-                                    Changed = input.next();
-                                    student.id = Changed;
-                                } else if (changeOption.equals("Last_Name")) {
-                                    System.out.print("Enter new change for Last Name: ");
-                                    Changed = input.next();
-                                    student.lastName = Changed;
-                                } else if (changeOption.equals("First_Name")) {
-                                    System.out.print("Enter new change for First Name: ");
-                                    Changed = input.next();
-                                    student.firstName = Changed;
-                                } else if (changeOption.equals("Phone_Number")) {
-                                    System.out.print("Enter new change for Phone number: ");
-                                    Changed = input.next();
-                                    student.phoneNum = Changed;
-                                } else if (changeOption.equals("Email")) {
-                                    System.out
-                                            .print("Enter new change for email make sure to have the address aswell: ");
-                                    Changed = input.next();
-                                    student.email = Changed;
-                                } else {
-                                    System.out.println("You have messed up start from the start please");
+                                while (!correct) {
+                                    System.out.print("Enter input here: ");
+                                    choice = input.nextInt(); // Read user input
                                     System.out.println();
+                                    switch (choice) {
+                                        case 1:
+                                            System.out.print("Enter new change for ID: ");
+                                            Changed = input.next();
+                                            student.id = Changed;
+                                            correct = true;
+                                            break;
+                                        case 2:
+                                            System.out.print("Enter new change for Last Name: ");
+                                            Changed = input.next();
+                                            student.lastName = Changed;
+                                            correct = true;
+
+                                            break;
+                                        case 3:
+                                            System.out.print("Enter new change for First Name: ");
+                                            Changed = input.next();
+                                            student.firstName = Changed;
+                                            correct = true;
+
+                                            break;
+                                        case 4:
+                                            System.out.print("Enter new change for Phone number: ");
+                                            Changed = input.next();
+                                            student.phoneNum = Changed;
+                                            correct = true;
+
+                                            break;
+                                        case 5:
+                                            System.out
+                                                    .print("Enter new change for email make sure to have the address aswell: ");
+                                            Changed = input.next();
+                                            student.email = Changed;
+                                            correct = true;
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    if (correct == false) {
+                                        System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                                        System.out.println();
+                                    }
                                 }
                                 saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
                                 saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
@@ -570,7 +625,6 @@ public class main {
                         if (!idState) {
                             System.out.println("ID not found. Please try again.");
                             System.out.println();
-                            break;
                         }
 
                     }
