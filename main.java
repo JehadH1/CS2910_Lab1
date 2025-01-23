@@ -796,32 +796,42 @@ public class main {
                     break;
 
                 case 16:
-                    System.out.print("What course are you trying to calculate the average for? ");
-                    String lookUpCourse = input.next();
-                    ArrayList<Integer> courseCode = new ArrayList<>();
-                    for (Course course : courses) {
-                        if (course.courseName.equals(lookUpCourse)) {
-                            courseCode.add(Integer.parseInt(course.code) - 1);
-                        }
-                    }
-                    int total = 0;
-                    int numberOfClasses = 0;
-                    for (Student student : students) {
-                        for (Integer index : courseCode) {
-                            if (student.getGrades().get(index) != -1) {
-                                total = total + student.getGrades().get(index);
-                                numberOfClasses++;
+                    correct = false;
+                    while (!correct) {
+                        System.out.println("What course are you trying to calculate the average for? ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
+                        String lookUpCourse = input.next();
+                        ArrayList<Integer> courseCode = new ArrayList<>();
+                        for (Course course : courses) {
+                            if (course.courseName.equals(lookUpCourse)) {
+                                courseCode.add(Integer.parseInt(course.code) - 1);
+                                correct = true;
                             }
                         }
-                    }
-                    if (numberOfClasses != 0) {
-                        total = total / numberOfClasses;
-                        System.out.println();
-                        System.out.println("Overall Average grade for " + lookUpCourse + " = " + total);
-                        System.out.println();
-                    } else {
-                        System.out.println();
-                        System.out.println("No Average For this class");
+                        double total = 0;
+                        double numberOfClasses = 0;
+                        for (Student student : students) {
+                            for (Integer index : courseCode) {
+                                if (student.getGrades().get(index) != -1) {
+                                    total = total + student.getGrades().get(index);
+                                    numberOfClasses++;
+                                }
+                            }
+                        }
+                        if (numberOfClasses != 0) {
+                            total = total / numberOfClasses;
+                            System.out.println();
+                            System.out.println("Overall Average grade for " + lookUpCourse + " = " + total);
+                            System.out.println();
+                        } else {
+                            System.out.println();
+                            System.out.println("No Average For this class");
+                        }
+                        if (correct == false) {
+                            System.out.println("You have messed try again");
+                            System.out.println();
+                        }
                     }
                     System.out.println();
                     break;
@@ -837,7 +847,7 @@ public class main {
         }
 
     }
-
+        // Method to save students to file
     public static void saveStudentsToFile(List<Student> students, String filePath) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Student student : students) {
@@ -859,6 +869,7 @@ public class main {
             System.out.println("Error writing to file: " + filePath);
         }
     }
+    // Method to save grade to file
 
     private static void saveGradesToFile(List<Student> students, String filePath) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
@@ -921,6 +932,7 @@ class Student {
                 id, lastName, firstName, phoneNum, email);
     }
 }
+// Define a course class to represent each course's data
 
 class Course {
     public String courseName;
