@@ -689,33 +689,41 @@ public class main {
                     System.out.println();
                     break;
                 case 14:
-                    System.out.print("Which students are you looking for? (enter last name) ");
-                    lastName = input.next();
-                    System.out.println();
-                    for (Student student : students) {
-                        int ave = 0;
-                        int numberOfClasses = 0;
-                        if (student.lastName.equals(lastName)) {
-
-                            System.out.print(student.lastName + " " + student.firstName);
-                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
-                            if (!(student.getGrades().equals(-1))) {
-                                for (int i = 0; i < outputGrades.size(); i++) {
-                                    if (!(outputGrades.get(i).equals(-1))) {
-                                        ave += outputGrades.get(i);
-                                        numberOfClasses++;
+                    correct = false;
+                    while (!correct) {
+                        System.out.println("Which students are you looking for? (enter last name) ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
+                        lastName = input.next();
+                        System.out.println();
+                        for (Student student : students) {
+                            double ave = 0;
+                            double numberOfClasses = 0;
+                            if (student.lastName.equals(lastName)) {
+                                correct = true;
+                                System.out.print(student.lastName + " " + student.firstName);
+                                ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+                                if (!(student.getGrades().equals(-1))) {
+                                    for (int i = 0; i < outputGrades.size(); i++) {
+                                        if (!(outputGrades.get(i).equals(-1))) {
+                                            ave += outputGrades.get(i);
+                                            numberOfClasses++;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (numberOfClasses != 0) {
-                                ave = ave / numberOfClasses;
-                                System.out.println(" Overall Average = " + ave);
-                                System.out.println();
-                            } else {
-                                System.out.println();
-                                System.out.println("You have no classes to find an average for");
+                                if (numberOfClasses != 0) {
+                                    ave = ave / numberOfClasses;
+                                    System.out.println(" Overall Average = " + ave);
+                                    System.out.println();
+                                } else {
+                                    System.out.println();
+                                    System.out.println("You have no classes to find an average for");
+                                }
                             }
+                        }
+                        if (correct == false) {
+                            System.out.println("You have messed  try again");
                         }
                     }
                     System.out.println();
