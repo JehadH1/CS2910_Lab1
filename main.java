@@ -209,7 +209,7 @@ public class main {
                                 }
                                 correct = true; // Exit the loop after processing valid input
                                 break;
-                                
+
                             case 2:
                                 System.out.println("Courses for Winter\n");
                                 for (Course course : courses) {
@@ -387,127 +387,128 @@ public class main {
                     System.out.println("2) New Course");
                     System.out.println("3) New Grade");
                     System.out.println();
-                    System.out.print("Please enter the number you want to access: ");
-                    choice = input.nextInt();
-                    System.out.println();
 
-                    switch (choice) {
-                        case 1:
-                            String id = "0", lastName = "Doe", firstName = "John", phoneNum = "XXX-XXX-XXXX",
-                                    email = " ";
-                            boolean idState = false;
-                            System.out.print("Enter a id: ");
-                            while (!idState) {
-                                id = input.next();
-                                idState = true;
+                    correct = false; // Ensure we stay in the loop until a valid choice is made
 
-                                for (Student student : students) {
-                                    if ((student.id.equals(id))) {
-                                        idState = false;
-                                        System.out.print("ID already exists. Please enter a different ID: ");
-                                        break;
-                                    }
+                    while (!correct) {
 
-                                }
-                            }
-                            System.out.print("Enter first name: ");
-                            firstName = input.next();
-                            System.out.print("Enter last name: ");
-                            lastName = input.next();
-                            System.out.print("Enter phone number: ");
-                            phoneNum = input.next();
-                            System.out.print("Enter email: ");
-                            email = input.next();
-                            students.add(new Student(id, lastName, firstName, phoneNum, email));
-                            saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
-
-                            for (int i = 0; i < codeTracker; i++) {
-                                students.getLast().addGrade(-1);
-                            }
-                            System.out.println("New student added successfully!");
-                            System.out.println();
-                            break;
-                        case 2:
-                            String courseName = "NA", code = "NA";
-                            semester = "NA";
-                            boolean isValidCourse = false;
-
-                            while (!isValidCourse) {
-                                System.out.print("Enter a Course Name: ");
-                                courseName = input.next();
-                                System.out.print("Enter Semester it's in: ");
-                                semester = input.next();
-
-                                // Check for duplicates
-                                for (Course course : courses) {
-                                    if (course.courseName.equals(courseName) && course.semester.equals(semester)) {
-                                        isValidCourse = true;
-                                        System.out.print(
-                                                "Course name with the same semester already exists. \nPlease enter a different course name or semester: ");
-                                        break;
-                                    }
-
-                                }
-
-                                if (!isValidCourse) {
-                                    isValidCourse = true;
-                                }
-                            }
-                            codeTracker++;
-                            code = "" + (codeTracker);
-
-                            // Add the course once validation passes
-                            courses.add(new Course(courseName, semester, code));
-                            System.out.println("New Course added successfully!");
-                            for (Student student : students) {
-                                student.addGrade(-1);
-                            }
-                            saveCoursesToFile(courses, "/home/jehad/Desktop/CS2910/Lab1/courses.csv");
-                            saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
-                            saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
-                            System.out.println();
-                            break;
-                        case 3:
-                            boolean IdFound = false;
-                            System.out.print("Enter Student ID for Student you want to change grade for: ");
-                            while (!IdFound) {
-                                String studentId = input.next();
-                                for (Student student : students) {
-                                    if (student.id.equals(studentId)) {
-                                        System.out.println("Student Found");
-                                        System.out.println();
-
-                                        System.out.println(
-                                                "What class do you want to change the grade for (list provided)");
-                                        for (Course course : courses) {
-                                            System.out.println(course);
+                        System.out.print("Please enter the number you want to access: ");
+                        choice = input.nextInt();
+                        System.out.println();
+                        switch (choice) {
+                            // New student
+                            case 1:
+                                String id = "0", lastName = "Doe", firstName = "John", phoneNum = "XXX-XXX-XXXX",
+                                        email = " ";
+                                boolean idState = false;
+                                System.out.print("Enter a ID: ");
+                                while (!idState) {
+                                    id = input.next();
+                                    idState = true;
+                                    for (Student student : students) {
+                                        if (student.id.equals(id)) {
+                                            idState = false;
+                                            System.out.print("ID already exists. Please enter a different ID: ");
+                                            break;
                                         }
-                                        System.out.println();
-                                        System.out.print("Enter code here: ");
-                                        int index = input.nextInt();
-                                        index--;
-                                        System.out.println();
-                                        System.out.print("What is the changed grade? (0-100) ");
-                                        int newGrade = input.nextInt();
-                                        System.out.println();
-
-                                        student.changeGrades(index, newGrade);
-                                        saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
-                                        System.out.println();
-                                        IdFound = true;
-                                        break;
                                     }
-
                                 }
-                            }
-                            if (!IdFound) {
-                                System.out.println("ID not found. Please try again.");
-                                System.out.println();
+                                System.out.print("Enter first name: ");
+                                firstName = input.next();
+                                System.out.print("Enter last name: ");
+                                lastName = input.next();
+                                System.out.print("Enter phone number: ");
+                                phoneNum = input.next();
+                                System.out.print("Enter email: ");
+                                email = input.next();
+                                students.add(new Student(id, lastName, firstName, phoneNum, email));
+                                saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+                                saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
+                                for (int i = 0; i < codeTracker; i++) {
+                                    students.get(students.size() - 1).addGrade(-1);
+                                }
+                                System.out.println("New student added successfully!\n");
+                                correct = true;
                                 break;
-                            }
 
+                            // New course
+                            case 2:
+                                semester = "Na";
+                                String courseName = "NA", code = "NA";
+                                boolean isValidCourse = false;
+                                while (!isValidCourse) {
+                                    System.out.print("Enter a Course Name (capitalize the first two letters): ");
+                                    courseName = input.next();
+                                    System.out.print("Enter Semester it's in: ");
+                                    semester = input.next().toLowerCase();
+                                    isValidCourse = true;
+                                    for (Course course : courses) {
+                                        if (course.courseName.equals(courseName) && course.semester.equals(semester)) {
+                                            isValidCourse = false;
+                                            System.out.print(
+                                                    "Course name with the same semester already exists. Please try again.\n");
+                                            break;
+                                        }
+                                    }
+                                }
+                                codeTracker++;
+                                code = String.valueOf(codeTracker);
+                                courses.add(new Course(courseName, semester, code));
+                                System.out.println("New Course added successfully!");
+                                for (Student student : students) {
+                                    student.addGrade(-1);
+                                }
+                                saveCoursesToFile(courses, "/home/jehad/Desktop/CS2910/La6b1/courses.csv");
+                                saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+                                saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
+                                System.out.println();
+                                correct = true;
+                                break;
+
+                            // Update grade
+                            case 3:
+                                boolean IdFound = false;
+                                System.out
+                                        .println("Enter Student ID for the student you want to change the grade for: ");
+                                while (!IdFound) {
+                                    System.out.print("Enter Student ID here: ");
+                                    String studentId = input.next();
+                                    System.out.println();
+                                    for (Student student : students) {
+                                        if (student.id.equals(studentId)) {
+                                            System.out.println("Student Found\n");
+                                            System.out.println(
+                                                    "What class do you want to change the grade for? (List provided)");
+                                            for (Course course : courses) {
+                                                System.out.println(course);
+                                            }
+                                            System.out.println();
+                                            System.out.print("Enter code here: ");
+                                            int index = input.nextInt() - 1;
+                                            System.out.println();
+                                            System.out.print("What is the changed grade? (0-100) ");
+                                            int newGrade = input.nextInt();
+                                            System.out.println();
+                                            student.changeGrades(index, newGrade);
+                                            saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
+                                            System.out.println();
+                                            IdFound = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!IdFound) {
+                                        System.out.println("ID not found. Please try again.\n");
+                                    }
+                                }
+                                correct = true;
+                                break;
+
+                            // Invalid choice
+                            default:
+                                System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                                break;
+                        }
                     }
-
                     break;
                 case 7:
                     boolean found = false;
