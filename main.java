@@ -13,7 +13,7 @@ public class main {
         // List to store student and course data
         ArrayList<Student> students = new ArrayList<>();
         ArrayList<Course> courses = new ArrayList<>();
-
+        
         while (inputFStudent.hasNextLine()) {
             String line = inputFStudent.nextLine(); // Read a line
             String[] parts = line.split(";"); // Split line by semicolon
