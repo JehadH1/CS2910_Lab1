@@ -986,13 +986,13 @@ class Student {
 
     public String fullString() {
         String gradesStr = grades.toString();
-        return String.format("ID: %-10s | Name: %-15s %-15s | Phone: %-15s | Email: %-30s | Grades: %s",
+        return String.format("ID: %-10s | Name: %-15s %-15s | Phone: %-9s | Email: %-30s | Grades: %s",
                 id, lastName, firstName, phoneNum, email, gradesStr);
     }
 
     @Override
     public String toString() {
-        return String.format("ID: %-10s | Name: %-15s %-15s | Phone: %-15s | Email: %-30s",
+        return String.format("ID: %-10s | Name: %-15s %-15s | Phone: %-9s | Email: %-30s",
                 id, lastName, firstName, phoneNum, email);
     }
 }
