@@ -934,7 +934,6 @@ class Student {
     }
 }
 // Define a course class to represent each course's data
-
 class Course {
     public String courseName;
     public String code;
