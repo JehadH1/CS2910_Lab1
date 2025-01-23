@@ -729,41 +729,72 @@ public class main {
                     System.out.println();
                     break;
                 case 15:
-                    System.out.print("Which students are you looking for? (enter last name) ");
-                    lastName = input.next();
-                    System.out.println();
-                    System.out.print("Which semester is this for? ");
-                    semester = input.next();
-                    ArrayList<Integer> SemNum = new ArrayList<>();
-                    for (Course course : courses) {
-                        if (course.semester.equals(semester)) {
-                            SemNum.add(Integer.parseInt(course.code) - 1);
-                        }
-                    }
-                    for (Student student : students) {
-                        int ave = 0;
-                        int numberOfClasses = 0;
+                    boolean lastNameCorrect = false;
+                    boolean semesterCorrect = false;
 
-                        if (student.lastName.equals(lastName)) {
-                            System.out.print(student.lastName + " " + student.firstName);
-                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
-                            for (Integer num : SemNum) {
-                                if (student.getGrades().get(num) != -1) {
-                                    ave += outputGrades.get(num);
-                                    numberOfClasses++;
+                    while (!lastNameCorrect || !semesterCorrect) {
+                        System.out.println("Which students are you looking for? (enter last name) ");
+                        System.out.println("You should know this beforehand.");
+                        System.out.print("Enter here: ");
+                        lastName = input.next();
+                        System.out.println();
+
+                        System.out.println("Which semester is this for? ");
+                        System.out.println("You should know this beforehand.");
+                        System.out.print("Enter here: ");
+                        semester = input.next().toLowerCase();
+                        System.out.println();
+
+                        // Check if the semester exists and collect relevant course indices
+                        ArrayList<Integer> semNum = new ArrayList<>();
+                        semesterCorrect = false;
+                        for (Course course : courses) {
+                            if (course.semester.equals(semester)) {
+                                semNum.add(Integer.parseInt(course.code) - 1);
+                                semesterCorrect = true;
+                            }
+                        }
+
+                        // Check if the last name exists and calculate the average
+                        lastNameCorrect = false;
+                        for (Student student : students) {
+                            double ave = 0;
+                            double numberOfClasses = 0;
+
+                            if (student.lastName.equalsIgnoreCase(lastName)) {
+                                lastNameCorrect = true;
+                                System.out.print(student.lastName + " " + student.firstName);
+                                ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+
+                                // Calculate average for the specific semester
+                                for (Integer num : semNum) {
+                                    if (student.getGrades().get(num) != -1) {
+                                        ave += outputGrades.get(num);
+                                        numberOfClasses++;
+                                    }
+                                }
+
+                                // Print the results
+                                if (numberOfClasses != 0) {
+                                    ave /= numberOfClasses;
+                                    System.out.println(" Overall Average = " + ave);
+                                    System.out.println();
+                                } else {
+                                    System.out.println(" Has no classes in this semester to calculate an average for.");
+                                    System.out.println();
                                 }
                             }
                         }
-                        if (numberOfClasses != 0) {
-                            ave = ave / numberOfClasses;
-                            System.out.println(" Overall Average = " + ave);
-                            System.out.println();
-                        } else {
-                            System.out.println();
-                            System.out.println("You have no classes in this sem to find an average for");
+
+                        // If either last name or semester is incorrect, prompt to try again
+                        if (!lastNameCorrect || !semesterCorrect) {
+                            System.out.println("No matching students or semester found. Please try again.\n");
                         }
                     }
+
+                    System.out.println();
                     break;
+
                 case 16:
                     System.out.print("What course are you trying to calculate the average for? ");
                     String lookUpCourse = input.next();
