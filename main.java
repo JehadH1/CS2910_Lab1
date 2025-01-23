@@ -610,14 +610,25 @@ public class main {
                     }
                     break;
                 case 10:
-                    System.out.print("Which students are you looking for? (enter last name) ");
-                    String lastName = input.next();
-                    System.out.println();
-                    for (Student student : students) {
-                        if (student.lastName.equals(lastName)) {
-                            System.out.println(student.fullString());
+                    correct = false;
+                    System.out.println("Which students are you looking for?");
+                    System.out.println("You should know this before hand");
+                    String lastName;
+                    while (!correct) {
+                        System.out.print("Enter here: ");
+                        lastName = (input.next());
+                        System.out.println();
+                        for (Student student : students) {
+                            if (student.lastName.equals(lastName)) {
+                                System.out.println(student.fullString());
+                                correct = true;
+                            }
+                        }
+                        if (correct == false) {
+                            System.out.println("You have messed up with the last name try again");
                         }
                     }
+
                     System.out.println();
                     break;
 
