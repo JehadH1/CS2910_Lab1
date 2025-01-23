@@ -9,9 +9,8 @@ public class main {
         Scanner inputFStudent = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/students.csv"));
         Scanner inputFCourses = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/courses.csv"));
         Scanner inputFGrades = new Scanner(new File("/home/jehad/Desktop/CS2910/Lab1/grades.csv"));
-        
 
-        // List to store student data
+        // List to store student and course data
         ArrayList<Student> students = new ArrayList<>();
         ArrayList<Course> courses = new ArrayList<>();
 
@@ -25,6 +24,7 @@ public class main {
                 String firstName = parts[2];
                 String phoneNum = parts[3];
                 String email = parts[4];
+                // after you split the line create new student
                 students.add(new Student(id, lastName, firstName, phoneNum, email));
             } else {
                 System.out.println("Invalid line format: " + line);
@@ -35,16 +35,17 @@ public class main {
             String line = inputFGrades.nextLine(); // Read a line
             String[] parts = line.split(";"); // Split line by semicolon
 
-            if (parts.length >= 4) {
+            if (parts.length >= 4) { // grade amount can vary
                 String id = parts[0];
                 ArrayList<Integer> grades = new ArrayList<>();
                 for (int i = 3; i < parts.length; i++) {
-                    if (parts[i].equals("na") || parts[i].equals("-1")) {
+                    if (parts[i].equals("na") || parts[i].equals("-1")) { // see if course has no grade
                         grades.add(-1);
                     } else {
                         grades.add(Integer.parseInt(parts[i].trim()));
                     }
                 }
+                // go through students and find the id that matchs then add the grades.
                 for (Student student : students) {
                     if (student.id.equals(id)) {
                         student.setGrades(grades);
@@ -55,19 +56,23 @@ public class main {
                 System.out.println("Invalid line format: " + line);
             }
         }
+
         int codeTracker = 0;
 
         while (inputFCourses.hasNextLine()) {
-            String line = inputFCourses.nextLine();
-            String[] parts = line.split(";");
+            String line = inputFCourses.nextLine(); // Read a line
+            String[] parts = line.split(";"); // Split line by semicolon
 
             if (parts.length == 3) {
                 String courseName = parts[0];
                 String semester = parts[1];
                 String code = parts[2];
+
+                // keep track of the biggest code through files
                 if (Integer.parseInt(code) > codeTracker) {
                     codeTracker = Integer.parseInt(code);
                 }
+                // add a new course Object
                 courses.add(new Course(courseName, semester, code));
             } else {
                 System.out.println("Invalid line format: " + line);
@@ -79,59 +84,47 @@ public class main {
 
         while (state) {
             System.out.println("What are you looking for ?");
-
             // Q1
             System.out.println("1) output original list of all students");
-
             // Q2
             System.out.println("2) output list of all students sorted by name (in alphabetic order and vice versa)");
-
             // Q3
             System.out.println("3) output original list of all courses");
-
             // Q4
             System.out.println("4) output list of all courses for the specific semester");
-
             // Q5
             System.out.println(
                     "5) output list of all courses for the specific semester sorted by course name (in alphabetic order and vice versa)");
             // Q6
             System.out.println("6) add new student, add new course, add a grade for the course");
-
             // Q7
             System.out.println("7) update student info (user enters student id)");
-
             // Q8
             System.out.println("8) search for course by name");
-
             // Q9
             System.out.println("9) search for course by code");
-
             // Q10
             System.out.println("10) search for student info by last name");
-
             // Q11
             System.out.println("11) search for student info by phone number");
-
             // Q12
             System.out.println(
                     "12) output list of all courses taken by student (user enters student last name) and grades");
             // Q13
             System.out.println(
                     "13) output list of all courses taken by student (user enters student last name) and grades");
-
             // Q14
             System.out.println("14) calculate average grade for a specific student (user enters student last name)");
-
             // Q15
             System.out.println(
                     "15) calculate the average grade for a specific student for a specific term (user enters student's last name and term)");
-
             // Q16
             System.out.println(
                     "16) calculate average grade for specific courses (user enters course name)");
             System.out.println("0) Exit");
 
+            // ask system admin what they want to access then go to case throw switch
+            // statement
             System.out.println();
             System.out.print("Please enter the number you want to access: ");
             choice = input.nextInt();
@@ -139,6 +132,7 @@ public class main {
 
             switch (choice) {
                 case 1:
+                    // Output the Students
                     for (Student student : students) {
                         System.out.println(student);
                     }
@@ -146,17 +140,26 @@ public class main {
                     break;
 
                 case 2:
+                    // Make a vector to keep first and last name so we can sort by Letters
                     Vector<String> first_last_name = new Vector<>();
+
                     for (Student student : students) {
-                        first_last_name.add(student.firstName + " " + student.lastName);
+                        first_last_name.add(student.firstName + "                " + student.lastName);
                     }
-                    Collections.sort(first_last_name);
                     System.out.println("alphabetical order");
+                    System.out.println();
+                    System.out.println("First Name        Lastname");
+                    System.out.println();
+                    Collections.sort(first_last_name);
                     for (String name : first_last_name) {
                         System.out.println(name);
                     }
+                    
                     System.out.println();
                     System.out.println("reverse alphabetical order");
+                    System.out.println();
+                    System.out.println("First Name        Lastname");
+                    System.out.println();
                     for (int i = first_last_name.size() - 1; i >= 0; i--) {
                         System.out.println(first_last_name.get(i));
                     }
