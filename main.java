@@ -570,7 +570,9 @@ public class main {
                 case 8:
                     boolean courseFound = false;
                     while (!courseFound) {
-                        System.out.print("What Course are you looking for? (enter the name): ");
+                        System.out.println("What Course are you looking for? (enter the name): ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
                         String courseCode = input.next();
                         for (Course course : courses) {
                             if (course.courseName.equals(courseCode)) {
@@ -589,7 +591,9 @@ public class main {
                 case 9:
                     boolean codeFound = false;
                     while (!codeFound) {
-                        System.out.print("What Course are you looking for? (enter the code): ");
+                        System.out.println("What Course are you looking for? (enter the code): ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
                         String courseCode = input.next();
                         for (Course course : courses) {
                             if (course.code.equals(courseCode)) {
@@ -601,7 +605,6 @@ public class main {
                         if (!codeFound) {
                             System.out.println("Course not found by code. Please try again.");
                             System.out.println();
-                            break;
                         }
                         System.out.println();
                     }
