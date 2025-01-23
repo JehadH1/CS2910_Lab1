@@ -635,7 +635,9 @@ public class main {
                 case 11:
                     correct = false;
                     while (!correct) {
-                        System.out.print("Which students are you looking for? (enter phone number) ");
+                        System.out.println("Which students are you looking for? (enter phone number) ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
                         String phoneNum = input.next();
                         System.out.println();
                         for (Student student : students) {
@@ -652,27 +654,36 @@ public class main {
                     break;
                 case 12:
                 case 13:
-                    System.out.print("Which students are you looking for? (enter last name) ");
-                    lastName = input.next();
-                    System.out.println();
-                    for (Student student : students) {
-                        int classTracker = student.getGrades().size();
-                        if (student.lastName.equals(lastName)) {
-                            System.out.println(student);
-                            System.out.println();
-                            ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
-                            for (int i = 0; i < outputGrades.size(); i++) {
-                                if (!(outputGrades.get(i).equals(-1))) {
-                                    System.out.print(courses.get(i).stringClass());
-                                    System.out.println("Grade: " + outputGrades.get(i));
-                                } else {
-                                    classTracker--;
+                    correct = false;
+                    while (!correct) {
+                        System.out.println("Which students are you looking for? (enter last name) ");
+                        System.out.println("You should know this before hand");
+                        System.out.print("Enter here: ");
+                        lastName = input.next();
+                        System.out.println();
+                        for (Student student : students) {
+                            int classTracker = student.getGrades().size();
+                            if (student.lastName.equals(lastName)) {
+                                System.out.println(student);
+                                System.out.println();
+                                correct = true;
+                                ArrayList<Integer> outputGrades = (ArrayList<Integer>) student.getGrades().clone();
+                                for (int i = 0; i < outputGrades.size(); i++) {
+                                    if (!(outputGrades.get(i).equals(-1))) {
+                                        System.out.print(courses.get(i).stringClass());
+                                        System.out.println("Grade: " + outputGrades.get(i));
+                                    } else {
+                                        classTracker--;
+                                    }
                                 }
+                                if (classTracker == 0) {
+                                    System.out.println("You have no classes");
+                                }
+                                System.out.println();
                             }
-                            if (classTracker == 0) {
-                                System.out.println("You have no classes");
-                            }
-                            System.out.println();
+                        }
+                        if (correct == false) {
+                            System.out.println("You have messed  try again");
                         }
                     }
                     System.out.println();
