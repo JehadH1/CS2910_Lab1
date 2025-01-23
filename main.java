@@ -587,6 +587,7 @@ public class main {
                         }
                         System.out.println();
                     }
+                    System.out.println();
                     break;
                 case 9:
                     boolean codeFound = false;
