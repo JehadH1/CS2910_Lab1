@@ -80,7 +80,7 @@ public class main {
         }
 
         boolean state = true;
-
+        int maxClasses = 0;
         int choice; // used for all input needed for number
         String semester; // used for all inputs need for semester
         boolean correct = false;
@@ -422,11 +422,11 @@ public class main {
                                 System.out.print("Enter email: ");
                                 email = input.next();
                                 students.add(new Student(id, lastName, firstName, phoneNum, email));
-                                saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
-                                saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                 for (int i = 0; i < codeTracker; i++) {
                                     students.get(students.size() - 1).addGrade(-1);
                                 }
+                                saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
+                                saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                 System.out.println("New student added successfully!\n");
                                 correct = true;
                                 break;
@@ -455,10 +455,17 @@ public class main {
                                 code = String.valueOf(codeTracker);
                                 courses.add(new Course(courseName, semester, code));
                                 System.out.println("New Course added successfully!");
+
                                 for (Student student : students) {
+                                    if (maxClasses < student.getGrades().size()) {
+                                        maxClasses = student.getGrades().size();
+                                    }
+                                    for (int i = student.getGrades().size(); i < maxClasses; i++) {
+                                        student.getGrades().add(-1);
+                                    }
                                     student.addGrade(-1);
                                 }
-                                saveCoursesToFile(courses, "/home/jehad/Desktop/CS2910/La6b1/courses.csv");
+                                saveCoursesToFile(courses, "/home/jehad/Desktop/CS2910/Lab1/courses.csv");
                                 saveStudentsToFile(students, "/home/jehad/Desktop/CS2910/Lab1/students.csv");
                                 saveGradesToFile(students, "/home/jehad/Desktop/CS2910/Lab1/grades.csv");
                                 System.out.println();
@@ -512,7 +519,7 @@ public class main {
                     }
                     break;
                 case 7:
-                
+
                     boolean idState = false;
                     while (!idState) {
                         System.out.print("Which student do you want to look for? enter Id: ");
@@ -849,7 +856,8 @@ public class main {
         }
 
     }
-        // Method to save students to file
+
+    // Method to save students to file
     public static void saveStudentsToFile(List<Student> students, String filePath) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Student student : students) {
@@ -934,6 +942,7 @@ class Student {
                 id, lastName, firstName, phoneNum, email);
     }
 }
+
 // Define a course class to represent each course's data
 class Course {
     public String courseName;
