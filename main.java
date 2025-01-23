@@ -80,7 +80,9 @@ public class main {
         }
 
         boolean state = true;
-        int choice;
+
+        int choice; // used for all input needed for number
+        String semester; // used for all inputs need for semester
 
         while (state) {
             System.out.println("What are you looking for ?");
@@ -132,7 +134,7 @@ public class main {
 
             switch (choice) {
                 case 1:
-                    // Output the Students
+                    // Output the Students Orignial list
                     for (Student student : students) {
                         System.out.println(student);
                     }
@@ -154,7 +156,7 @@ public class main {
                     for (String name : first_last_name) {
                         System.out.println(name);
                     }
-                    
+
                     System.out.println();
                     System.out.println("reverse alphabetical order");
                     System.out.println();
@@ -167,9 +169,7 @@ public class main {
                     break;
 
                 case 3:
-                    courses.sort((a, b) -> {
-                        return (a.courseName).compareTo(b.courseName);
-                    });
+                    // Output the Course Orignial list
                     for (Course course : courses) {
                         System.out.println(course);
                     }
@@ -177,22 +177,54 @@ public class main {
                     break;
 
                 case 4:
+                    // Sort by course name
                     courses.sort((a, b) -> {
                         return (a.courseName).compareTo(b.courseName);
                     });
-                    System.out.println("What semester do you wanna look for?");
-                    System.out.print("You have these options fall, winter, spring or summer: ");
-                    String semester = input.next();
+
+                    // ask and get user input
+                    System.out.println("What semester do you wanna look for?\n");
+                    System.out.println("1) Fall \n2) Winter \n3) Spring \n4) Summer\n");
+                    System.out.print("Enter input here: ");
                     System.out.println();
-                    if (semester.equals("fall") || semester.equals("winter")
-                            || semester.equals("spring") | semester.equals("summer")) {
-                        for (Course course : courses) {
-                            if (course.semester.equals(semester)) {
-                                System.out.println(course);
+
+                    switch (choice) {
+                        case 1:
+                            System.out.println("Courses for Fall\n");
+                            for (Course course : courses) {
+                                if (course.semester.equals("fall")) {
+                                    System.out.println(course);
+                                }
                             }
-                        }
-                    } else {
-                        System.out.println("sorry could not find the semester you want");
+                            break;
+                        case 2:
+                            System.out.println("Courses for Winter\n");
+
+                            for (Course course : courses) {
+                                if (course.semester.equals("winter")) {
+                                    System.out.println(course);
+                                }
+                            }
+                            break;
+                        case 3:
+                            System.out.println("Courses for spring\n");
+                            for (Course course : courses) {
+                                if (course.semester.equals("spring")) {
+                                    System.out.println(course);
+                                }
+                            }
+                            break;
+                        case 4:
+                            System.out.println("Courses for Fall\n");
+                            for (Course course : courses) {
+                                if (course.semester.equals("summer")) {
+                                    System.out.println(course);
+                                }
+                            }
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+
                     }
                     System.out.println();
                     break;
